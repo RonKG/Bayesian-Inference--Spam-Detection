@@ -4,4 +4,4 @@
 
 - You can view a fully rendered notebook by following this nbviewer link:
 
-http://nbviewer.jupyter.org/github/RonKG/Bayesian-Inference-Explained/blob/master/Bayesian_Inference.ipynb
+https://github.com/RonKG/Bayesian-Inference--Spam-Detection/blob/master/Bayesian_Inference.ipynb
