@@ -11714,9 +11714,6 @@ ul.typeahead-list > li > a {
 .ansi-bold { font-weight: bold; }
 
     </style>
-<style type="text/css">
-    
-    </style>
 
 
 <style type="text/css">
@@ -11778,7 +11775,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Our-Mission">Our Mission<a class="anchor-link" href="#Our-Mission">&#182;</a></h2><p>Spam detection is one of the major applications of Machine Learning in the interwebs today. Pretty much all of the major email service providers have spam detection systems built in and automatically classify such mail as 'Junk Mail'.</p>
+<h2 id="Spam-Detection-using-Naive-Bayes">Spam Detection using Naive Bayes<a class="anchor-link" href="#Spam-Detection-using-Naive-Bayes">&#182;</a></h2><p>Spam detection is one of the major applications of Machine Learning in the interwebs today. Pretty much all of the major email service providers have spam detection systems built in and automatically classify such mail as 'Junk Mail'.</p>
 <p>In this mission we will be using the Naive Bayes algorithm to create a model that can classify <a href="https://archive.ics.uci.edu/ml/datasets/SMS+Spam+Collection">dataset</a> SMS messages as spam or not spam, based on the training we give to the model. It is important to have some level of intuition as to what a spammy text message might look like. Usually they have words like 'free', 'win', 'winner', 'cash', 'prize' and the like in them as these texts are designed to catch your eye and in some sense tempt you to open them. Also, spam messages tend to have words written in all capitals and also tend to use a lot of exclamation marks. To the recipient, it is usually pretty straightforward to identify a spam text and our objective here is to train a model to do that for us!</p>
 <p>Being able to identify spam messages is a binary classification problem as messages are classified as either 'Spam' or 'Not Spam' and nothing else. Also, this is a supervised learning problem, as we will be feeding a labelled dataset into the model, that it can learn from, to make future predictions.</p>
 
@@ -11817,26 +11814,20 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p><strong> Instructions: </strong></p>
+<p><strong> Code: </strong></p>
 <ul>
-<li>Import the dataset into a pandas dataframe using the read_table method. Because this is a tab separated dataset we will be using '\t' as the value for the 'sep' argument which specifies this format. </li>
-<li>Also, rename the column names by specifying a list ['label, 'sms_message'] to the 'names' argument of read_table().</li>
-<li>Print the first five values of the dataframe with the new column names.</li>
+<li>We will import the dataset into pandas dataframe and reanme the columns by passing a list of suitable column names.</li>
 </ul>
-</blockquote>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="c1"># Dataset from - https://archive.ics.uci.edu/ml/datasets/SMS+Spam+Collection</span>
 <span class="c1"># url = &#39;https://archive.ics.uci.edu/ml/machine-learning-databases/00228/smsspamcollection.zip&#39;</span>
 
@@ -11855,12 +11846,25 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[34]:</div>
+<div class="prompt output_prompt">Out[1]:</div>
 
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -11946,27 +11950,20 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p><strong>Instructions: </strong></p>
+<p><strong>Code: </strong></p>
 <ul>
-<li>Convert the values in the 'label' column to numerical values using map method as follows:
-{'ham':0, 'spam':1} This maps the 'ham' value to 0 and the 'spam' value to 1.</li>
-<li>Also, to get an idea of the size of the dataset we are dealing with, print out number of rows and columns using 
-'shape'.</li>
+<li>We will convert the values in the 'label' column to numerical values using map method which maps the 'ham' value to 0 and the 'spam' value to 1.</li>
 </ul>
-</blockquote>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ham&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ham&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -11981,12 +11978,25 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[35]:</div>
+<div class="prompt output_prompt">Out[2]:</div>
 
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -12075,29 +12085,17 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Step-2.2:-Implementing-Bag-of-Words-from-scratch">Step 2.2: Implementing Bag of Words from scratch<a class="anchor-link" href="#Step-2.2:-Implementing-Bag-of-Words-from-scratch">&#182;</a></h3><p>Before we dive into scikit-learn's Bag of Words(BoW) library to do the dirty work for us, let's implement it ourselves first so that we can understand what's happening behind the scenes.</p>
 <p><strong> Step 1: Convert all strings to their lower case form. </strong></p>
-<p>Let's say we have a document set:</p>
-
-<pre><code>documents = ['Hello, how are you!',
-             'Win money, win from home.',
-             'Call me now.',
-             'Hello, Call hello you tomorrow?']</code></pre>
-<blockquote><blockquote><p><strong> Instructions: </strong></p>
-<ul>
-<li>Convert all the strings in the documents set to their lower case. Save them into a list called 'lower_case_documents'. You can convert strings to their lower case in python by using the lower() method.</li>
-</ul>
-</blockquote>
-</blockquote>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution:</span>
+<span class="sd">Convert all the strings in the documents set to their lower case.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">documents</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Hello, how are you!&#39;</span><span class="p">,</span>
              <span class="s1">&#39;Win money, win from home.&#39;</span><span class="p">,</span>
@@ -12139,22 +12137,17 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong> Step 2: Removing all punctuations </strong></p>
-<blockquote><blockquote><p><strong>Instructions: </strong>
-Remove all punctuation from the strings in the document set. Save them into a list called 
-'sans_punctuation_documents'.</p>
-</blockquote>
-</blockquote>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution:</span>
+<span class="sd">Remove all punctuation from the strings in the document set</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="kn">import</span> <span class="nn">string</span>
@@ -12204,26 +12197,13 @@ Remove all punctuation from the strings in the document set. Save them into a li
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><blockquote><p><strong>Instructions:</strong>
-Tokenize the strings stored in 'sans_punctuation_documents' using the split() method. and store the final document set 
-in a list called 'preprocessed_documents'.</p>
-</blockquote>
-</blockquote>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution:</span>
+<span class="sd">Tokenize the strings stored in &#39;sans_punctuation_documents&#39; using the split() method.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">preprocessed_documents</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sans_punctuation_documents</span><span class="p">:</span>
@@ -12266,25 +12246,14 @@ in a list called 'preprocessed_documents'.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><blockquote><p><strong>Instructions:</strong>
-Using the Counter() method and preprocessed_documents as the input, create a dictionary with the keys being each word in each document and the corresponding values being the frequncy of occurrence of that word. Save each Counter dictionary as an item in a list called 'frequency_list'.</p>
-</blockquote>
-</blockquote>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
+<span class="sd">create a dictionary with the keys being each word in each document and the corresponding </span>
+<span class="sd">values being the frequncy of occurrence of that word</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
@@ -12327,7 +12296,7 @@ Using the Counter() method and preprocessed_documents as the input, create a dic
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Congratulations! You have implemented the Bag of Words process from scratch! As we can see in our previous output, we have a frequency distribution dictionary which gives a clear view of the text that we are dealing with.</p>
+<p>We have implemented the Bag of Words process from scratch! As we can see in our previous output, we have a frequency distribution dictionary which gives a clear view of the text that we are dealing with.</p>
 <p>We should now have a solid understanding of what is happening behind the scenes in the <code>sklearn.feature_extraction.text.CountVectorizer</code> method of scikit-learn.</p>
 <p>We will now implement <code>sklearn.feature_extraction.text.CountVectorizer</code> method in the next step.</p>
 
@@ -12363,28 +12332,16 @@ Using the Counter() method and preprocessed_documents as the input, create a dic
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><blockquote><p><strong>Instructions:</strong>
-Import the sklearn.feature_extraction.text.CountVectorizer method and create an instance of it called 'count_vector'.</p>
-</blockquote>
-</blockquote>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
+<span class="sd">Import the sklearn.feature_extraction.text.CountVectorizer method and create an instance of it called &#39;count_vector&#39;</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="k">import</span> <span class="n">CountVectorizer</span>
-<span class="n">count_vector</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>  <span class="c1"># TODO</span>
+<span class="n">count_vector</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>  
 </pre></div>
 
 </div>
@@ -12420,11 +12377,10 @@ Import the sklearn.feature_extraction.text.CountVectorizer method and create an 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Practice node:</span>
 <span class="sd">Print the &#39;count_vector&#39; object which is an instance of &#39;CountVectorizer()&#39;</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">count_vector</span><span class="p">)</span>
@@ -12458,26 +12414,14 @@ Import the sklearn.feature_extraction.text.CountVectorizer method and create an 
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><blockquote><p><strong>Instructions:</strong>
-Fit your document dataset to the CountVectorizer object you have created using fit(), and get the list of words 
-which have been categorized as features using the get_feature_names() method.</p>
-</blockquote>
-</blockquote>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution:</span>
+<span class="sd">Fit your document dataset to the CountVectorizer object we created using fit(), and get the list of words </span>
+<span class="sd">which have been categorized as features using the get_feature_names() method</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">count_vector</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
 <span class="n">count_vector</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
@@ -12493,7 +12437,7 @@ which have been categorized as features using the get_feature_names() method.</p
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[42]:</div>
+<div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -12528,30 +12472,17 @@ which have been categorized as features using the get_feature_names() method.</p
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><blockquote><p><strong>
-Instructions:</strong>
-Create a matrix with the rows being each of the 4 documents, and the columns being each word. 
-The corresponding (row, column) value is the frequency of occurrence of that word(in the column) in a particular
-document(in the row). You can do this using the transform() method and passing in the document data set as the 
-argument. The transform() method returns a matrix of numpy integers, you can convert this to an array using
-toarray(). Call the array 'doc_array'</p>
-</blockquote>
-</blockquote>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
+<span class="sd">Create a matrix with the rows being each of the 4 documents, and the columns being each word. </span>
+<span class="sd">The corresponding (row, column) value is the frequency of occurrence of that word(in the column) in a particular</span>
+<span class="sd">document(in the row). You can do this using the transform() method and passing in the document data set as the </span>
+<span class="sd">argument. The transform() method returns a matrix of numpy integers, you can convert this to an array using</span>
+<span class="sd">toarray().</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">doc_array</span> <span class="o">=</span> <span class="n">count_vector</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span><span class="c1"># TODO</span>
 <span class="n">doc_array</span>
@@ -12567,7 +12498,7 @@ toarray(). Call the array 'doc_array'</p>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[47]:</div>
+<div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -12576,7 +12507,7 @@ toarray(). Call the array 'doc_array'</p>
 <pre>array([[1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
        [0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 2, 0],
        [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
-       [0, 1, 0, 2, 0, 0, 0, 0, 0, 1, 0, 1]])</pre>
+       [0, 1, 0, 2, 0, 0, 0, 0, 0, 1, 0, 1]], dtype=int64)</pre>
 </div>
 
 </div>
@@ -12594,26 +12525,14 @@ toarray(). Call the array 'doc_array'</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><blockquote><p><strong>Instructions:</strong>
-Convert the array we obtained, loaded into 'doc_array', into a dataframe and set the column names to 
-the word names(which you computed earlier using get_feature_names(). Call the dataframe 'frequency_matrix'.</p>
-</blockquote>
-</blockquote>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
+<span class="sd">Convert the array we obtained, loaded into &#39;doc_array&#39;, into a dataframe and set the column names to </span>
+<span class="sd">the word names(which you computed earlier using get_feature_names().</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">cols</span> <span class="o">=</span> <span class="n">count_vector</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
 <span class="n">frequency_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">doc_array</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
@@ -12630,12 +12549,25 @@ the word names(which you computed earlier using get_feature_names(). Call the da
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[50]:</div>
+<div class="prompt output_prompt">Out[12]:</div>
 
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -12730,10 +12662,10 @@ the word names(which you computed earlier using get_feature_names(). Call the da
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Congratulations! You have successfully implemented a Bag of Words problem for a document dataset that we created.</p>
+<p>We have successfully implemented a Bag of Words problem for a document dataset that we created.</p>
 <p>One potential issue that can arise from using this method out of the box is the fact that if our dataset of text is extremely large(say if we have a large collection of news articles or email data), there will be certain values that are more common that others simply due to the structure of the language itself. So for example words like 'is', 'the', 'an', pronouns, grammatical constructs etc could skew our matrix and affect our analyis.</p>
 <p>There are a couple of ways to mitigate this. One way is to use the <code>stop_words</code> parameter and set its value to <code>english</code>. This will automatically ignore all words(from our input text) that are found in a built in list of English stop words in scikit-learn.</p>
-<p>Another way of mitigating this is by using the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer">tfidf</a> method. This method is out of scope for the context of this lesson.</p>
+<p>Another way of mitigating this is by using the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer">tfidf</a> method.</p>
 
 </div>
 </div>
@@ -12751,25 +12683,22 @@ the word names(which you computed earlier using get_feature_names(). Call the da
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><blockquote><p><strong>Instructions:</strong>
-Split the dataset into a training and testing set by using the train_test_split method in sklearn. Split the data
+<p>We split the dataset into a training and testing set by using the train_test_split method in sklearn. Split the data
 using the following variables:</p>
 <ul>
 <li><code>X_train</code> is our training data for the 'sms_message' column.</li>
 <li><code>y_train</code> is our training data for the 'label' column</li>
 <li><code>X_test</code> is our testing data for the 'sms_message' column.</li>
 <li><code>y_test</code> is our testing data for the 'label' column
-Print out the number of rows we have in each our training and testing data.</li>
+Then we print out the number of rows we have in each our training and testing data.</li>
 </ul>
-</blockquote>
-</blockquote>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">,</span><span class="s1">&#39;sms_message&#39;</span><span class="p">]</span>
@@ -12786,12 +12715,25 @@ Print out the number of rows we have in each our training and testing data.</li>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[53]:</div>
+<div class="prompt output_prompt">Out[13]:</div>
 
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -12839,17 +12781,10 @@ Print out the number of rows we have in each our training and testing data.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
-
-<span class="sd">NOTE: sklearn.cross_validation will be deprecated soon to sklearn.model_selection </span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="c1"># split into training and testing sets</span>
-<span class="c1"># USE from sklearn.model_selection import train_test_split to avoid seeing deprecation warning.</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
 
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sms_message&#39;</span><span class="p">],</span> 
                                                     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> 
@@ -12896,63 +12831,28 @@ Number of rows in the test set: 1393
 </ul>
 <p>Note that <code>X_train</code> is our training data for the 'sms_message' column in our dataset and we will be using this to train our model.</p>
 <p><code>X_test</code> is our testing data for the 'sms_message' column and this is the data we will be using(after transformation to a matrix) to make predictions on. We will then compare those predictions with <code>y_test</code> in a later step.</p>
-<p>For now, we have provided the code that does the matrix transformations for you!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The code for this segment is in 2 parts. Firstly, we are learning a vocabulary dictionary for the training data 
+and then transforming the data into a document-term matrix; secondly, for the testing data we are only 
+transforming the data into a document-term matrix.</p>
+<p>This is similar to the process we followed in Step 2.3</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">[Practice Node]</span>
-
-<span class="sd">The code for this segment is in 2 parts. Firstly, we are learning a vocabulary dictionary for the training data </span>
-<span class="sd">and then transforming the data into a document-term matrix; secondly, for the testing data we are only </span>
-<span class="sd">transforming the data into a document-term matrix.</span>
-
-<span class="sd">This is similar to the process we followed in Step 2.3</span>
-
-<span class="sd">We will provide the transformed data to students in the variables &#39;training_data&#39; and &#39;testing_data&#39;.</span>
-<span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[55]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#34;\n[Practice Node]\n\nThe code for this segment is in 2 parts. Firstly, we are learning a vocabulary dictionary for the training data \nand then transforming the data into a document-term matrix; secondly, for the testing data we are only \ntransforming the data into a document-term matrix.\n\nThis is similar to the process we followed in Step 2.3\n\nWe will provide the transformed data to students in the variables &#39;training_data&#39; and &#39;testing_data&#39;.\n&#34;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="c1"># Instantiate the CountVectorizer method</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Instantiate the CountVectorizer method</span>
 <span class="n">count_vector</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
 
 <span class="c1"># Fit the training data and then return the matrix</span>
@@ -13010,27 +12910,12 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions:</span>
 <span class="sd">Calculate probability of getting a positive test result, P(Pos)</span>
-<span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
 
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution (skeleton code will be provided)</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="c1"># P(D)</span>
 <span class="n">p_diabetes</span> <span class="o">=</span> <span class="mf">0.01</span>
@@ -13086,34 +12971,23 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions:</span>
-<span class="sd">Compute the probability of an individual having diabetes, given that, that individual got a positive test result.</span>
-<span class="sd">In other words, compute P(D|Pos).</span>
-
-<span class="sd">The formula is: P(D|Pos) = (P(D) * P(Pos|D) / P(Pos)</span>
-<span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Compute the probability of an individual having diabetes, given that, that individual got a positive test result.
+In other words, compute P(D|Pos).</p>
+<p>The formula is: P(D|Pos) = (P(D) * P(Pos|D) / P(Pos)</p>
 
 </div>
 </div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="c1"># P(D|Pos)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># P(D|Pos)</span>
 <span class="n">p_diabetes_pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_diabetes</span> <span class="o">*</span> <span class="n">p_pos_diabetes</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_pos</span>     <span class="c1"># TODO</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Probability of an individual having diabetes, given that that individual got a positive test result is:</span><span class="se">\</span>
 <span class="s1">&#39;</span><span class="p">,</span><span class="nb">format</span><span class="p">(</span><span class="n">p_diabetes_pos</span><span class="p">))</span> 
@@ -13142,39 +13016,26 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions:</span>
-<span class="sd">Compute the probability of an individual not having diabetes, given that, that individual got a positive test result.</span>
-<span class="sd">In other words, compute P(~D|Pos).</span>
-
-<span class="sd">The formula is: P(~D|Pos) = (P(~D) * P(Pos|~D) / P(Pos)</span>
-
-<span class="sd">Note that P(Pos/~D) can be computed as 1 - P(Neg/~D). </span>
-
-<span class="sd">Therefore:</span>
-<span class="sd">P(Pos/~D) = p_pos_no_diabetes = 1 - 0.9 = 0.1</span>
-<span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Compute the probability of an individual not having diabetes, given that, that individual got a positive test result.
+In other words, compute P(~D|Pos).</p>
+<p>The formula is: P(~D|Pos) = (P(~D) * P(Pos|~D) / P(Pos)</p>
+<p>Note that P(Pos/~D) can be computed as 1 - P(Neg/~D).</p>
+<p>Therefore:
+P(Pos/~D) = p_pos_no_diabetes = 1 - 0.9 = 0.1</p>
 
 </div>
 </div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="c1"># P(Pos/~D)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># P(Pos/~D)</span>
 <span class="n">p_pos_no_diabetes</span> <span class="o">=</span> <span class="mf">0.1</span>
 
 <span class="c1"># P(~D|Pos)</span>
@@ -13211,7 +13072,7 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Congratulations! You have implemented Bayes theorem from scratch. Your analysis shows that even if you get a positive test result, there is only a 8.3% chance that you actually have diabetes and a 91.67% chance that you do not have diabetes. This is of course assuming that only 1% of the entire population has diabetes which of course is only an assumption.</p>
+<p>We have implemented Bayes theorem from scratch. Your analysis shows that even if you get a positive test result, there is only a 8.3% chance that you actually have diabetes and a 91.67% chance that you do not have diabetes. This is of course assuming that only 1% of the entire population has diabetes which of course is only an assumption.</p>
 
 </div>
 </div>
@@ -13278,37 +13139,28 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions: Compute the probability of the words &#39;freedom&#39; and &#39;immigration&#39; being said in a speech, or</span>
-<span class="sd">P(F,I).</span>
-
-<span class="sd">The first step is multiplying the probabilities of Jill Stein giving a speech with her individual </span>
-<span class="sd">probabilities of saying the words &#39;freedom&#39; and &#39;immigration&#39;. Store this in a variable called p_j_text</span>
-
-<span class="sd">The second step is multiplying the probabilities of Gary Johnson giving a speech with his individual </span>
-<span class="sd">probabilities of saying the words &#39;freedom&#39; and &#39;immigration&#39;. Store this in a variable called p_g_text</span>
-
-<span class="sd">The third step is to add both of these probabilities and you will get P(F,I).</span>
-<span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Compute the probability of the words 'freedom' and 'immigration' being said in a speech, or
+P(F,I).</p>
+<p>The first step is multiplying the probabilities of Jill Stein giving a speech with her individual 
+probabilities of saying the words 'freedom' and 'immigration'. Store this in a variable called p_j_text</p>
+<p>The second step is multiplying the probabilities of Gary Johnson giving a speech with his individual 
+probabilities of saying the words 'freedom' and 'immigration'. Store this in a variable called p_g_text</p>
+<p>The third step is to add both of these probabilities and you will get P(F,I).</p>
 
 </div>
 </div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution: Step 1</span>
+<span class="sd">Step 1</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="c1"># P(J)</span>
 <span class="n">p_j</span> <span class="o">=</span> <span class="mf">0.5</span>
@@ -13348,11 +13200,11 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution: Step 2</span>
+<span class="sd">Step 2</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="c1"># P(G)</span>
 <span class="n">p_g</span> <span class="o">=</span> <span class="mf">0.5</span>
@@ -13392,11 +13244,11 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution: Step 3: Compute P(F,I) and store in p_f_i</span>
+<span class="sd">Step 3: Compute P(F,I) and store in p_f_i</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">p_f_i</span> <span class="o">=</span> <span class="n">p_j_text</span> <span class="o">+</span> <span class="n">p_g_text</span>   <span class="c1"># TODO</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Probability of words freedom and immigration being said are: &#39;</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">p_f_i</span><span class="p">))</span>
@@ -13436,27 +13288,11 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions:</span>
 <span class="sd">Compute P(J|F,I) using the formula P(J|F,I) = (P(J) * P(F|J) * P(I|J)) / P(F,I) and store it in a variable p_j_fi</span>
-<span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">p_j_fi</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_j</span> <span class="o">*</span> <span class="n">p_j_f</span> <span class="o">*</span> <span class="n">p_j_i</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_f_i</span>  <span class="c1"># TODO</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The probability of Jill Stein saying the words Freedom and Immigration: &#39;</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">p_j_fi</span><span class="p">))</span>
@@ -13487,27 +13323,12 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions:</span>
 <span class="sd">Compute P(G|F,I) using the formula P(G|F,I) = (P(G) * P(F|G) * P(I|G)) / P(F,I) and store it in a variable p_g_fi</span>
-<span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
 
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="n">p_g_fi</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_g</span> <span class="o">*</span> <span class="n">p_g_f</span> <span class="o">*</span> <span class="n">p_g_i</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_f_i</span>  <span class="c1"># TODO</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The probability of Gary Johnson saying the words Freedom and Immigration: &#39;</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">p_g_fi</span><span class="p">))</span>
@@ -13540,7 +13361,7 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And as we can see, just like in the Bayes' theorem case, the sum of our posteriors is equal to 1. Congratulations! You have implemented the Naive Bayes' theorem from scratch. Our analysis shows that there is only a 6.6% chance that Jill Stein of the Green Party uses the words 'freedom' and 'immigration' in her speech as compared the the 93.3% chance for Gary Johnson of the Libertarian party.</p>
+<p>And as we can see, just like in the Bayes' theorem case, the sum of our posteriors is equal to 1. We have implemented the Naive Bayes' theorem from scratch. Our analysis shows that there is only a 6.6% chance that Jill Stein of the Green Party uses the words 'freedom' and 'immigration' in her speech as compared the the 93.3% chance for Gary Johnson of the Libertarian party.</p>
 
 </div>
 </div>
@@ -13567,33 +13388,17 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions:</span>
-
 <span class="sd">We have loaded the training data into the variable &#39;training_data&#39; and the testing data into the </span>
 <span class="sd">variable &#39;testing_data&#39;.</span>
 
-<span class="sd">Import the MultinomialNB classifier and fit the training data into the classifier using fit(). Name your classifier</span>
-<span class="sd">&#39;naive_bayes&#39;. You will be training the classifier using &#39;training_data&#39; and y_train&#39; from our split earlier. </span>
+<span class="sd">Import the MultinomialNB classifier and fit the training data into the classifier using fit(). We name the classifier</span>
+<span class="sd">&#39;naive_bayes&#39;. We will be training the classifier using &#39;training_data&#39; and y_train&#39; from our split earlier. </span>
 <span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
 
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
-<span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="k">import</span> <span class="n">MultinomialNB</span>
 <span class="n">naive_bayes</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span> <span class="c1"># TODO</span>
 <span class="n">naive_bayes</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training_data</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="c1"># TODO)</span>
@@ -13609,7 +13414,7 @@ In the medical field, such probabilies play a very important role as it usually 
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[83]:</div>
+<div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -13626,30 +13431,15 @@ In the medical field, such probabilies play a very important role as it usually 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions:</span>
 <span class="sd">Now that our algorithm has been trained using the training data set we can now make some predictions on </span>
 <span class="sd">the test data stored in &#39;testing_data&#39; using predict(). Save your predictions into the &#39;predictions&#39; variable.</span>
 <span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
 
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Solution</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">naive_bayes</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">testing_data</span><span class="p">)</span> <span class="c1"># TODO)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">naive_bayes</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">testing_data</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13694,49 +13484,18 @@ It is a ratio of true positives(words classified as spam, and which are actually
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Instructions:</span>
 <span class="sd">Compute the accuracy, precision, recall and F1 scores of your model using your test data &#39;y_test&#39;</span>
 <span class="sd">and the predictions you made earlier stored in the &#39;predictions&#39; variable.</span>
 <span class="sd">&#39;&#39;&#39;</span>
-</pre></div>
 
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[91]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#34;\nInstructions:\nCompute the accuracy, precision, recall and F1 scores of your model using your test data &#39;y_test&#39;\nand the predictions you made earlier stored in the &#39;predictions&#39; variable.\n&#34;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># predictions</span>
+<span class="c1"># predictions</span>
 <span class="c1"># y_train</span>
 <span class="c1"># y_test</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy score: &#39;</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)))</span>
 </pre></div>
 
@@ -13765,7 +13524,7 @@ It is a ratio of true positives(words classified as spam, and which are actually
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
@@ -13810,8 +13569,7 @@ F1 score:  0.9560439560439562
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Step-7:-Conclusion">Step 7: Conclusion<a class="anchor-link" href="#Step-7:-Conclusion">&#182;</a></h3><p>One of the major advantages that Naive Bayes has over other classification algorithms is its ability to handle an extremely large number of features. In our case, each word is treated as a feature and there are thousands of different words. Also, it performs well even with the presence of irrelevant features and is relatively unaffected by them. The other major advantage it has is its relative simplicity. Naive Bayes' works well right out of the box and tuning it's parameters is rarely ever necessary, except usually in cases where the distribution of the data is known. 
 It rarely ever overfits the data. Another important advantage is that its model training and prediction times are very fast for the amount of data it can handle. All in all, Naive Bayes' really is a gem of an algorithm!</p>
-<p>Congratulations! You have successfully designed a model that can efficiently predict if an SMS message is spam or not!</p>
-<p>Thank you for learning with us!</p>
+<p>We have successfully designed a model that can efficiently predict if an SMS message is spam or not!</p>
 
 </div>
 </div>
